@@ -67,7 +67,7 @@ $(function() {
         imgObj.src = imgSrc;
     }
 
-    $('#container').on('touched','li',function(){
+    $('#container').on('tap','li',function(){
         var _id = $(this).attr('data-id');
         loadImg(_id);
     })
