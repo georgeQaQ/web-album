@@ -9,8 +9,6 @@ $(function() {
         var picWidth = Math.floor((winWidth - margin * 3) / 4);
         for (var i = 1; i <= total; i++) {
             imgSrc = 'images/' + i + '.jpg';
-            console.log(winWidth);
-            console.log(picWidth);
             var p = 2;
             if (i % 4 == 1) {
                 p = 0;
@@ -51,12 +49,12 @@ $(function() {
             realh = winWidth*(h/w);
             var paddingLeft = Math.floor((winWidth-realw)/2),
             paddingTop = Math.floor((winHeight-realh)/2);
-            lImage.attr('src',imgSrc).css({
+            lImage.css({
                 width: 'auto',
                 height: 'auto',
                 paddingLeft: 0,
                 paddingTop: 0
-            })
+            });
             if(h/w > 1.2){
                 lImage.attr('src',imgSrc).css({
                     height: winHeight,
