@@ -32,7 +32,7 @@ $(function() {
 
 
     var lImage = $('#large_img');
-    domImg = lImage[0]; /*dom引用*/
+    var domImg = lImage[0]; /*dom引用*/
     function loadImg(id,callback){
         $('#large_container').css({
             width: zWin.width(),
@@ -49,12 +49,8 @@ $(function() {
             realh = winWidth*(h/w);
             var paddingLeft = Math.floor((winWidth-realw)/2),
             paddingTop = Math.floor((winHeight-realh)/2);
-            lImage.css({
-                width: 'auto',
-                height: 'auto',
-                paddingLeft: 0,
-                paddingTop: 0
-            });
+            lImage.css('width','auto').css('height','auto');
+            lImage.css('padding-left','0px').css('padding-top','0px');
             if(h/w > 1.2){
                 lImage.attr('src',imgSrc).css({
                     height: winHeight,
