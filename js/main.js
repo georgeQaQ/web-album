@@ -32,8 +32,10 @@ $(function() {
     }
     render();
 
-    var lImage = $('#large-img');
-    function loadImg(id){
+
+    var lImage = $('#large_img');
+    domImg = lImage[0]; /*dom引用*/
+    function loadImg(id,callback){
         $('#large_container').css({
             width: zWin.width(),
             height: zWin.height()
@@ -49,8 +51,12 @@ $(function() {
             realh = winWidth*(h/w);
             var paddingLeft = Math.floor((winWidth-realw)/2),
             paddingTop = Math.floor((winHeight-realh)/2);
-            console.log(realw);
-            console.log(winWidth);
+            lImage.attr('src',imgSrc).css({
+                width: 'auto',
+                height: 'auto',
+                paddingLeft: 0,
+                paddingTop: 0
+            })
             if(h/w > 1.2){
                 lImage.attr('src',imgSrc).css({
                     height: winHeight,
@@ -63,12 +69,43 @@ $(function() {
                     paddingTop: paddingTop
                 })
             }
-        }
-        imgObj.src = imgSrc;
-    }
+            callback&&callback();
+        };
 
-    $('#container').on('touchstart','li',function(){
-        var _id = $(this).attr('data-id');
+        imgObj.src = imgSrc;
+
+    }
+    var cid;
+    $('#container').on('tap','li',function(){
+        var _id = cid = $(this).attr('data-id');
         loadImg(_id);
-    })
+    });
+
+    $('#large_container').on('tap',function(){
+        $(this).hide();
+    }).on('swipeLeft',function(){
+            cid++;
+            if(cid > total)
+                cid=17;
+            else
+            loadImg(cid,function(){
+                domImg.addEventListener('webkitAnimationEnd', function(){lImage.removeAttr('class');
+                    domImg.removeEventListener('webkitAnimationEnd', function(){});
+                },false);
+                lImage.addClass('animated bounceInRight');
+            });
+
+        }).on('swipeRight',function(){
+            cid--;
+            if(cid<1)
+                cid=1;
+            else
+            loadImg(cid,function(){
+                domImg.addEventListener('webkitAnimationEnd', function(){lImage.removeAttr('class');
+                    domImg.removeEventListener('webkitAnimationEnd', function(){});
+                },false);
+                lImage.addClass('animated bounceInLeft');
+            });
+
+        })
 });
